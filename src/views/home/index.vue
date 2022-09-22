@@ -1,5 +1,6 @@
 <template>
     <div class="test">test scss</div>
+    <div>{{ obj.apiResult }}</div>
     <el-row class="tac">
         <el-col :span="12">
             <h5 class="mb-2">Custom colors</h5>
@@ -46,17 +47,28 @@
     </el-row>
 </template>
 
+<script setup lang="ts">
+import API from '@/api';
+import { reactive } from 'vue'
+let obj = reactive({ apiResult: {} });
+const requestRes = async () => {
+    let result = await API.login('zhangsan', '123456')
+    obj.apiResult = result
+};
+requestRes();
+</script>
+
 <style lang="scss">
-    //按需引入并使用
-    @import "@/style/globalMixin.scss";
-    .test {
-        background-color: $bg-color;
-        @include box-shadow;
+//按需引入并使用
+@import '@/style/globalMixin.scss';
+.test {
+    background-color: $bg-color;
+    @include box-shadow;
+}
+.tac {
+    color: #fff;
+    .mb-2 {
+        color: #ffffff;
     }
-    .tac {
-        color: #fff;
-        .mb-2 {
-            color: #ffffff;
-        }
-    }
+}
 </style>
